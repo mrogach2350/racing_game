@@ -1,0 +1,18 @@
+.box {
+  border: 1px solid black;
+  height: 50px;
+  text-align: center;
+  font-size: 30px;
+}
+#finishBox {
+  background: yellow;
+}
+#p1Start {
+  background: blue;
+}
+#p2Start {
+  background: red;
+}
+h1 {
+  text-align: center;
+}
