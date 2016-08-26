@@ -4,6 +4,8 @@
   width: 70px;
   text-align: center;
   font-size: 30px;
+  background-image: url('../imgs/key.jpg');
+  background-size: 70px;
 }
 #finishBox {
   background: yellow;
