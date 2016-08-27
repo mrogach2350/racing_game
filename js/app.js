@@ -35,24 +35,41 @@ var keyCodes = {
   88 : "x",
   89 : "y",
   90 : "z",
-  91 : "Windows Key / Left ⌘ / Chromebook Search key",
-  93 : "Windows Menu / Right ⌘",
-  186 : "semi-colon / ñ",
-  187 : "equal sign ",
-  188 : "comma",
-  189 : "dash ",
-  190 : "period ",
-  191 : "forward slash / ç",
-  192 : "grave accent / ñ",
-  219 : "open bracket ",
-  220 : "back slash ",
-  221 : "close bracket ",
-  222 : "single quote ",
+  186 : ";",
+  187 : "=",
+  188 : ",",
+  189 : "-",
+  190 : ".",
+  191 : "/",
+  219 : "[",
+  192 : " ~ ",
+  221 : "]",
+  222 : "'",
 };
-console.log(keyCodes[222]);
+// 32 : "␣"
+var availCodes = [48,49,50,51,52,53,54,55,56,57,65,66,67,68,
+  69,70,71,72,73,74,75,76,77,78,79,80,81,82,83,84,85,86,87,
+  88,89,90,186,187,188,189,190,191,219,192,221,222];
+
+var keyText = ["0","1","2","3","4","5","6","7","8","9",
+  "a","b","c","d","e","f","g","h","i","j","k","l","m","n",
+  "o","p","q","r","s","t","u","v","w","x","y","z",";","=",
+  "," ,"-",".","/","[","~","]","'",];
+
+
 $(document).ready(function() {
+  $('#start').on('click', function handleEvent(event){
+    for (var i = 0; i < availCodes.length; i++){
+      var id = "#" + i;
+      $(id).text(keyText[i]);
+      $('#finishBox').text("␣");
+    }
+  });
+  $('#reset').on('click', function handleEvent(event){
+    $('.box').text('');
+  });
+
   $(window).on('keydown', function handleEvent(event){
     console.log(event.keyCode)
   });
-
 });
