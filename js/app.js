@@ -56,20 +56,78 @@ var keyText = ["0","1","2","3","4","5","6","7","8","9",
   "o","p","q","r","s","t","u","v","w","x","y","z",";","=",
   "," ,"-",".","/","[","~","]","'",];
 
+var assignedKeys = {};
+
+function Player() {
+  this.img = '<img src="imgs/racecar.jpg" alt="" />';
+  this.box = startBox;
+  this.availMoves = whichMoves(this.box);
+
+//   this.move = function() {
+//     $(window).on('keydown', function handleEvent(event){
+//       var keyPressedCode = event.keyCode;
+//       if (keyPressedCode in keyCodes) {
+//         var keyPressed = keyCodes[keyPressedCode];
+//       }
+//       if (keyPressed in assignedKeys){
+//         console.log(assignedKeys[keyPressed]);
+//       }
+//     }
+//   }
+}
+
+// function moveCar(){
+//
+// }
+
+function fixBoard(){
+  for (var i = 0; i < availCodes.length; i++){
+    var id = "#" + i;
+    if (id !== player1.box && player2.box){
+      if (id in assignedKeys){
+        console.log(id, assignedKeys[id]);
+        $(id).html(assignedKeys[id]);
+      }
+    }
+  }
+  $('#p1Start').html('');
+  $('#p2Start').html('');
+}
 
 $(document).ready(function() {
+
   $('#start').on('click', function handleEvent(event){
     for (var i = 0; i < availCodes.length; i++){
       var id = "#" + i;
-      $(id).text(keyText[i]);
-      $('#finishBox').text("␣");
-    }
+      assignedKeys[id] = keyText[i];
+      // $(id).text(keyText[i]);
+      $(id).text(id);
+    };
+    var player1 = new Player();
+    var player2 = new Player();
+    $('#finishBox').text("␣");
+    $('#p1Start').html(player1.img);
+    $('#p2Start').html(player2.img);
   });
+
   $('#reset').on('click', function handleEvent(event){
-    $('.box').text('');
+    $('.box').html('');
+    $('#p1Start').html('');
+    $('#p2Start').html('');
   });
 
   $(window).on('keydown', function handleEvent(event){
-    console.log(event.keyCode)
+    var keyPressedCode = event.keyCode;
+    if (keyPressedCode in keyCodes) {
+      var keyPressed = keyCodes[keyPressedCode];
+    }
+
+    for (var i = 0; i < availCodes.length; i++){
+      var id = "#" + i;
+      if ($(id).text() === keyPressed){
+        $(id).html('<img src="imgs/racecar.jpg" alt="" />');
+      }
+    }
   });
+
 });
