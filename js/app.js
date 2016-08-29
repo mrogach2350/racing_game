@@ -58,10 +58,10 @@ var keyText = ["0","1","2","3","4","5","6","7","8","9",
 
 var assignedKeys = {};
 
-function Player() {
-  this.img = '<img src="imgs/racecar.jpg" alt="" />';
-  this.box = startBox;
-  this.availMoves = whichMoves(this.box);
+function Player(img, startBox) {
+  this.img = img;
+  this.box = startBox || '#p1start';
+  this.availMoves = whichMoves('#p1start');
 
 //   this.move = function() {
 //     $(window).on('keydown', function handleEvent(event){
@@ -95,6 +95,9 @@ function fixBoard(){
 }
 
 $(document).ready(function() {
+  //intentionally removed 'var' to put players into the global scope.
+  player1 = new Player('<img src="imgs/redCar.png" alt="" />');
+  player2 = new Player('<img src="imgs/racecar.jpg" alt="" />');
 
   $('#start').on('click', function handleEvent(event){
     for (var i = 0; i < availCodes.length; i++){
@@ -103,11 +106,13 @@ $(document).ready(function() {
       // $(id).text(keyText[i]);
       $(id).text(id);
     };
-    var player1 = new Player();
-    var player2 = new Player();
+    // var player1 = new Player();
+    // var player2 = new Player();
     $('#finishBox').text("␣");
     $('#p1Start').html(player1.img);
+    console.log(player1.img)
     $('#p2Start').html(player2.img);
+    console.log(player2.img)
   });
 
   $('#reset').on('click', function handleEvent(event){
