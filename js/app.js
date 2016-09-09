@@ -76,19 +76,24 @@ function fixBoard(){
   }
 }
 
+function reset(){
+  $('.box').html('');
+  $('#p1Start').html('');
+  $('#p2Start').html('');
+}
+
 $(document).ready(function() {
   //intentionally removed 'var' to put players into the global scope.
 
 
   $('#start').on('click', function handleEvent(event){
-    event.preventDefault();
     for (var i = 0; i < availCodes.length; i++){
       var id = "#" + i;
       assignedKeys[id] = keyText[i];
       $(id).text(keyText[i]);
       // $(id).text(id);
     };
-    $('#finishBox').text("␣");
+    $('#finishBox').text("⌘");
     $('#p1Start').html('<img src="imgs/redCar.png" alt="" />');
     $('#p2Start').html('<img src="imgs/racecar.jpg" alt="" />');
     player1 = new Player($('#p1Start').html(), '#p1Start');
@@ -96,30 +101,35 @@ $(document).ready(function() {
   });
 
   $('#reset').on('click', function handleEvent(event){
-    $('.box').html('');
-    $('#p1Start').html('');
-    $('#p2Start').html('');
+    reset();
   });
 
   $(window).on('keydown', function handleEvent(event){
     var keyPressedCode = event.keyCode;
+    if (keyPressedCode === 91 || keyPressedCode === 93){
+      if (player1.availMoves.indexOf('#finishBox') !== -1){
+        $('#finishBox').html('<img src="imgs/redCar.png" alt="" />');
+        alert('Player 1 wins');
+        var p1win = ('Player 1 wins').split();
+
+      }
+      if (player2.availMoves.indexOf('#finishBox') !== -1){
+        $('#finishBox').html('<img src="imgs/racecar.jpg" alt="" />');
+        alert('Player 2 wins');
+      }
+    }
     if (keyPressedCode in keyCodes) {
       var keyPressed = keyCodes[keyPressedCode];
     }
     getAvailMoves(keyPressed);
     moveCars(keyPressed);
-    if($('#finishBox').html() === player1.img){
-      alert('Player 1 wins');
-    }
-    if($('#finishBox').html() === player2.img){
-      alert('Player 2 wins');
-    }
-
-    // for (var i = 0; i < availCodes.length; i++){
-    //   var id = "#" + i;
-    //   if ($(id).text() === keyPressed){
-    //     $(id).html('<img src="imgs/racecar.jpg" alt="" />');
-    //   }
+    // if($('#finishBox').html() === player1.img){
+    //   fixBoard();
+    //
+    // }
+    // if($('#finishBox').html() === player2.img){
+    //   fixBoard();
+    //
     // }
   });
 

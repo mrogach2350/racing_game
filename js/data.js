@@ -1,6 +1,6 @@
 function whichMoves(box){
   var availMoves;
-  if (box == "#p1Start"){
+  if (box === "#p1Start"){
     availMoves = ['#0', '#6'];
   }
   if (box === '#0'){
