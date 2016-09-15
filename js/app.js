@@ -1,22 +1,11 @@
 var assignedKeys = {};
+var p1TotalWins = 0;
+var p2TotalWins = 0;
 
 function Player(img, startBox) {
   this.img = img;
   this.box = startBox || '#p1start';
   this.availMoves = [];
-  // this.moveThis = function (key){
-  //   for (var i = 0; i < Object.keys(assignedKeys).length; i ++){
-  //     var keyArr = Object.keys(assignedKeys);
-  //     var keyId = "#" + i;
-  //     if (this.availMoves.indexOf(keyId) !== -1){
-  //       if (assignedKeys[keyId] === key){
-  //         $(keyArr[i]).html(this.img);
-  //         this.box = keyArr[i];
-  //       }
-  //     }
-  //   fixBoard();
-  //   }
-  // }
 }
 
 function getAvailMoves(key){
@@ -44,14 +33,14 @@ function moveCars(key){
     if (player1.availMoves.indexOf(keyId) !== -1){
       if (assignedKeys[keyId] === key){
         $(player1.box).html('');
-        $(keyArr[i]).html('<img src="imgs/redCar.png" alt="" />');
+        $(keyArr[i]).html(player1.img);
         player1.box = keyArr[i];
       }
     }
     if (player2.availMoves.indexOf(keyId) !== -1){
       if (assignedKeys[keyId] === key){
         $(player2.box).html('');
-        $(keyArr[i]).html('<img src="imgs/racecar.jpg" alt="" />');
+        $(keyArr[i]).html(player2.img);
         player2.box = keyArr[i];
       }
     }
@@ -83,7 +72,7 @@ function reset(){
 }
 
 $(document).ready(function() {
-  //intentionally removed 'var' to put players into the global scope.
+
 
 
   $('#start').on('click', function handleEvent(event){
@@ -91,11 +80,12 @@ $(document).ready(function() {
       var id = "#" + i;
       assignedKeys[id] = keyText[i];
       $(id).text(keyText[i]);
-      // $(id).text(id);
     };
     $('#finishBox').text("⌘");
     $('#p1Start').html('<img src="imgs/redCar.png" alt="" />');
     $('#p2Start').html('<img src="imgs/racecar.jpg" alt="" />');
+
+      //intentionally removed 'var' to put players into the global scope.
     player1 = new Player($('#p1Start').html(), '#p1Start');
     player2 = new Player($('#p2Start').html(), '#p2Start');
   });
@@ -106,31 +96,34 @@ $(document).ready(function() {
 
   $(window).on('keydown', function handleEvent(event){
     var keyPressedCode = event.keyCode;
-    if (keyPressedCode === 91 || keyPressedCode === 93){
-      if (player1.availMoves.indexOf('#finishBox') !== -1){
-        $('#finishBox').html('<img src="imgs/redCar.png" alt="" />');
-        alert('Player 1 wins');
-        var p1win = ('Player 1 wins').split();
-
-      }
-      if (player2.availMoves.indexOf('#finishBox') !== -1){
-        $('#finishBox').html('<img src="imgs/racecar.jpg" alt="" />');
-        alert('Player 2 wins');
-      }
-    }
     if (keyPressedCode in keyCodes) {
       var keyPressed = keyCodes[keyPressedCode];
     }
     getAvailMoves(keyPressed);
     moveCars(keyPressed);
-    // if($('#finishBox').html() === player1.img){
-    //   fixBoard();
-    //
-    // }
-    // if($('#finishBox').html() === player2.img){
-    //   fixBoard();
-    //
-    // }
-  });
 
+    if (keyPressedCode === 91 || keyPressedCode === 93){
+      if (player1.availMoves.indexOf('#finishBox') !== -1){
+        reset();
+        $('#finishBox').html(player1.img);
+        var p1win = ('Player 1 wins').split('');
+        for (var i = 0; i < p1win.length; i++){
+          var id = "#" + i;
+          $(id).text(p1win[i]);
+        };
+        p1TotalWins ++;
+      }
+      if (player2.availMoves.indexOf('#finishBox') !== -1){
+        reset();
+        $('#finishBox').html(player2.img);
+        var p2win = ('Player 2 wins').split('');
+        for (var i = 0; i < p2win.length; i++){
+          var id = "#" + i;
+          $(id).text(p2win[i]);
+        };
+        p2TotalWins ++;
+      }
+    }
+
+  });
 });
